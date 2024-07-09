@@ -15,14 +15,17 @@
 echo "Hello! I am here to calculate your total and average family age. \nWhat is your name? \n";
 $userName = trim(fgets(STDIN));
 
-echo "Hello " . $userName . "\n" . "How old are you (please type only full years count)? \n";
+echo "Hello " . ucfirst($userName) . "\n" . "How old are you (please type only full years count)? \n";
 
 $userAge = (int)fgets(STDIN);
 
-if($userAge >= 18) {
+$minimalAge = 18;
+
+if($userAge >= $minimalAge) {
     echo "Are you married (please type yes or no)? \n";
 } else {
     echo "You are too young, come back when you turn 18. Goodbye ;) \n";
+    exit;
 }
 
 $userMarried = trim(fgets(STDIN));
@@ -31,6 +34,7 @@ if($userMarried === "yes") {
     echo "How old is your wife (please type only full years count)? \n";
 } else {
     echo "Dont worry come back when you get married. Goodbye! \n";
+    exit;
 }
 
 $userWifeAge = (int)trim(fgets(STDIN));
