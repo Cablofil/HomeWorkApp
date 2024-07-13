@@ -34,7 +34,7 @@ echo $y . PHP_EOL;
 
 function toPowerOfExponentV2(float &$number, float $exponent = 2): void
 {
-    if ($number || $exponent === 1) {
+    if ($number || $exponent != 1) {
         $number = $number ** $exponent;
     }
 }
