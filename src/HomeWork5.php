@@ -22,7 +22,7 @@ $n = 3;
 
 function toPowerOfExponent(float $number, float $exponent = 2): float
 {
-    if ($number || $exponent === 1) {
+    if ($number == 1 || $exponent == 1) {
         return $number;
     }
 
@@ -34,7 +34,7 @@ echo $y . PHP_EOL;
 
 function toPowerOfExponentV2(float &$number, float $exponent = 2): void
 {
-    if ($number || $exponent != 1) {
+    if ($number != 1 && $exponent != 1 ) {
         $number = $number ** $exponent;
     }
 }
