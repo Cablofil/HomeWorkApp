@@ -2,7 +2,7 @@
 
 require_once  './TaskTracker.php';
 
-$taskTracker = new TaskTracker();
+$taskTracker = new TaskTracker('test.txt');
 
 try {
     $taskTracker->addTask('Test task 2', Priority::MEDIUM);
@@ -11,12 +11,12 @@ try {
 
     $taskTracker->deleteTask('66b21875d0554');
 
+    $tasks = $taskTracker->getTasks();
+
 } catch (Exception $exception) {
     echo $exception->getMessage() . PHP_EOL;
     exit;
 }
-
-$tasks = $taskTracker->getTasks();
 
 print_r($tasks);
 

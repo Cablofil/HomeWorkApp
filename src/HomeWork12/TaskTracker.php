@@ -10,19 +10,19 @@ class TaskTracker
     private FileWorker $fileWorker;
 
     protected Task $task;
-    public function __construct()
+    public function __construct(string $fileName, string $filePath = './storage/')
     {
-        $this->fileWorker = new FileWorker('./storage/', 'test.txt');
+        $this->fileWorker = new FileWorker($fileName, $filePath);
     }
 
     /**
      * @param string $taskName
      * @param Priority $priority
      * @return void
+     * @throws Exception
      */
     public function addTask(string $taskName, Priority $priority): void
     {
-        try {
 
             $this->validateTaskName($taskName);
 
@@ -30,25 +30,16 @@ class TaskTracker
 
             $this->fileWorker->writeFile(serialize($this->task) . PHP_EOL);
 
-        } catch (Exception $exception) {
-            echo $exception->getMessage() . PHP_EOL;
-            exit;
-        }
     }
 
     /**
      * @return array
+     * @throws Exception
      */
     public function getTasks(): array
     {
-        try {
 
-            $tasksData = $this->fileWorker->readFromFile();
-
-        } catch (Exception $exception) {
-            echo $exception->getMessage() . PHP_EOL;
-            exit;
-        }
+        $tasksData = $this->fileWorker->readFromFile();
 
         $tasks = [];
 
@@ -90,14 +81,10 @@ class TaskTracker
         }
 
         if ($taskFound) {
-            try {
-                $this->fileWorker->writeFile('', true);
-                foreach ($tasks as $task) {
-                    $this->fileWorker->writeFile(serialize($task) . PHP_EOL);
-                }
-            } catch (Exception $exception) {
-                echo $exception->getMessage() . PHP_EOL;
-                exit;
+
+            $this->fileWorker->writeFile('', true);
+            foreach ($tasks as $task) {
+                $this->fileWorker->writeFile(serialize($task) . PHP_EOL);
             }
         }
 
@@ -126,14 +113,9 @@ class TaskTracker
         }
 
         if ($taskFound) {
-            try {
-                $this->fileWorker->writeFile('', true);
-                foreach ($updatedTasks as $task) {
-                    $this->fileWorker->writeFile(serialize($task) . PHP_EOL);
-                }
-            } catch (Exception $exception) {
-                echo $exception->getMessage() . PHP_EOL;
-                exit;
+            $this->fileWorker->writeFile('', true);
+            foreach ($updatedTasks as $task) {
+                $this->fileWorker->writeFile(serialize($task) . PHP_EOL);
             }
         }
 
