@@ -1,5 +1,7 @@
 services:
   php:
-    build: ./
+    build: ./php
     volumes:
-      - ./src/:/app/
+      - ./src/:/var/www/html
+    ports:
+      - 8080:80
