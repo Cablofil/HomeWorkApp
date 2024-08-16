@@ -40,8 +40,6 @@ Trait ValidationTrait
     {
         $dateNow = new DateTime();
 
-        $dateNow->getTimestamp();
-
         $selectedDate = new DateTime($selectedDate);
 
         if ($dateNow < $selectedDate) {
