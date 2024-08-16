@@ -16,7 +16,7 @@ try {
     print_r($softWareGoods);
 
 
-    $hardWareGoods = new HardWareGoods('IPhone16', 900, '2024-12-12', ['glass', 'aluminium'], true);
+    $hardWareGoods = new HardWareGoods('IPhone16', 900, '2024-12-12', ['glass', 'aluminium'], );
 
     print_r($hardWareGoods);
 
