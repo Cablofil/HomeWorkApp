@@ -2,7 +2,7 @@
 
 require_once './ValidationTrait.php';
 
-class HardWareGoods
+class SoftWareGoods
 {
     use ValidationTrait;
 
@@ -12,7 +12,7 @@ class HardWareGoods
 
     protected float $price;
 
-    protected array $materials;
+    protected string $osType;
 
     protected bool $preOrder;
 
@@ -20,22 +20,23 @@ class HardWareGoods
      * @param string $name
      * @param float $price
      * @param string $productionDate
-     * @param array $materials
+     * @param string $osType
      * @param bool $preOrder
      * @throws Exception
      */
-    public function __construct(string $name, float $price, string $productionDate, array $materials, bool $preOrder = false)
+    public function __construct(string $name, float $price, string $productionDate, string $osType, bool $preOrder = false)
     {
-        if(!$preOrder) {
+        if (!$preOrder) {
             $this->validateProductionDate($productionDate);
         }
+
         $this->validateName($name);
         $this->validatePrice($price);
 
         $this->setName($name);
         $this->setProductionDate($productionDate);
         $this->setPrice($price);
-        $this->setMaterials($materials);
+        $this->setOsType($osType);
         $this->setPreOrder($preOrder);
     }
 
@@ -64,11 +65,11 @@ class HardWareGoods
     }
 
     /**
-     * @param array $materials
+     * @param string $osType
      */
-    public function setMaterials(array $materials): void
+    public function setOsType(string $osType): void
     {
-        $this->materials = $materials;
+        $this->osType = $osType;
     }
 
     /**
@@ -104,11 +105,11 @@ class HardWareGoods
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getMaterials(): array
+    public function getOsType(): string
     {
-        return $this->materials;
+        return $this->osType;
     }
 
     /**
@@ -118,4 +119,5 @@ class HardWareGoods
     {
         return $this->preOrder;
     }
+
 }

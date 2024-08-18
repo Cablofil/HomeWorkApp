@@ -9,13 +9,13 @@ class Task
 
     protected Status $status;
 
-public function __construct(string $taskName, Priority $priority, Status $status)
-{
-    $this->setTaskId();
-    $this->setTaskName($taskName);
-    $this->setStatus($status);
-    $this->setPriority($priority);
-}
+    public function __construct(string $taskName, Priority $priority, Status $status)
+    {
+        $this->setTaskId();
+        $this->setTaskName($taskName);
+        $this->setStatus($status);
+        $this->setPriority($priority);
+    }
 
     /**
      * @param Status $status

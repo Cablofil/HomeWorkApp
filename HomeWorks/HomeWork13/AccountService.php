@@ -92,7 +92,7 @@ class AccountService
      */
     public static function withdrawValidation(float $amount, float $balance): void
     {
-        if($amount > $balance) {
+        if ($amount > $balance) {
             throw new Exception('There are not enough funds on the account');
         }
     }
