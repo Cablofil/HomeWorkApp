@@ -2,22 +2,38 @@
 
 class HomeWorkController
 {
+    use CalculatorValidator;
 
-    public function index()
+    /**
+     * @return void
+     */
+    public function index(): void
     {
         echo 'Hello World!';
     }
 
-    public function calculator()
+    /**
+     * @return void
+     */
+    public function calculator(): void
     {
         require_once APP_DIR . 'views/calculator.php';
     }
 
-    public function calculate()
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public function calculate(): void
     {
-        $number1 = $_POST['number1'];
-        $number2 = $_POST['number2'];
+        $number1 = (int)$_POST['number1'];
+        $number2 = (int)$_POST['number2'];
+
+        $this->validateNumbers($number1, $number2);
+
         $action = $_POST['action'];
+
+        $this->validateAction($action);
 
         Calculator::calculate($number1, $number2, $action);
     }

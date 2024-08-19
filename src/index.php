@@ -15,6 +15,7 @@ require_once APP_DIR . 'app/system/Router/routes.php';
 require_once APP_DIR . 'app/system/Functions.php';
 require_once APP_DIR . 'app/system/Validator.php';
 require_once APP_DIR . 'app/system/Response.php';
+require_once APP_DIR . 'app/Calculator/CalculatorValidator.php';
 require_once APP_DIR . 'app/Calculator/Calculator.php';
 
 //Cookie::set('mycookie', 'lesson is over');
