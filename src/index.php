@@ -1,59 +1,24 @@
 <?php
 
-//echo 'php:8.3-apache image, running from src/index.php file' . PHP_EOL;
+session_start();
 
-/**
- * Для введення значень в консоль обрав формат діалогу  для обчислення загального та середнього віку родини з трьох або двох членів (юзер, дружина, та третій член сім'ї)
- * При вооді віку використав приведення до integer та перевірку відповідності певному віку для продовження,
- * і "заглушку" в разі, якщо менше, або введено строку.
- * В питанні про дружину використав перевірку на відповідність значенню і типу, та заглушку для негативного кейсу.
- * В кінці якщо ввести вік, відбувається захардкоджений розрахунок на 3
- * і відповідно на 2 членів в родини, при відповіді "no" іншого строчного значення, або "0", захардкодив розрахунок на двох.
- *
- */
+define('APP_URL', 'http://localhost:8080/');
+define('APP_DIR', __DIR__ . '/');
+define('CONTROLLER_DIR', APP_DIR . 'app/Controllers/');
 
-echo "Hello! I am here to calculate your total and average family age. \nWhat is your name? \n";
-$userName = trim(fgets(STDIN));
+require_once APP_DIR . 'app/system/Cookie.php';
+require_once APP_DIR . 'app/system/Session.php';
+require_once APP_DIR . 'app/system/Request.php';
+require_once APP_DIR . 'app/system/Enums/HttpMethod.php';
+require_once APP_DIR . 'app/system/Router/Router.php';
+require_once APP_DIR . 'app/system/Router/routes.php';
+require_once APP_DIR . 'app/system/Functions.php';
+require_once APP_DIR . 'app/system/Validator.php';
+require_once APP_DIR . 'app/system/Response.php';
+require_once APP_DIR . 'app/Calculator/Calculator.php';
 
-echo "Hello " . ucfirst($userName) . "\n" . "How old are you (please type only full years count)? \n";
+//Cookie::set('mycookie', 'lesson is over');
 
-$userAge = (int)fgets(STDIN);
-
-$minimalAge = 18;
-
-if($userAge >= $minimalAge) {
-    echo "Are you married (please type yes or no)? \n";
-} else {
-    echo "You are too young, come back when you turn 18. Goodbye ;) \n";
-    exit;
-}
-
-$userMarried = trim(fgets(STDIN));
-
-if($userMarried === "yes") {
-    echo "How old is your wife (please type only full years count)? \n";
-} else {
-    echo "Dont worry come back when you get married. Goodbye! \n";
-    exit;
-}
-
-$userWifeAge = (int)trim(fgets(STDIN));
-
-echo "Do you have any or third family member or pet? Please type full years count or just no, so I can calculate your total and average family age \n";
-
-$userThirdFamilyMember = trim(fgets(STDIN));
-
-$totalFamilyAge = null;
-$averageFamilyAge = null;
-
-if (!intval($userThirdFamilyMember)) {
-    $totalFamilyAge = $userAge + $userWifeAge;
-    $averageFamilyAge = $totalFamilyAge / 2;
-} else {
-    $totalFamilyAge = $userAge + $userWifeAge + (int)$userThirdFamilyMember ;
-    $averageFamilyAge = $totalFamilyAge / 3;
-}
-
-echo "Your total family age is " . $totalFamilyAge . " and average is " . $averageFamilyAge . "\n";
+Router::process(HttpMethod::from(Request::method()), Request::url());
 
 

@@ -24,11 +24,11 @@ class TaskTracker
     public function addTask(string $taskName, Priority $priority): void
     {
 
-            $this->validateTaskName($taskName);
+        $this->validateTaskName($taskName);
 
-            $this->task = new Task($taskName, $priority, Status::UNDONE);
+        $this->task = new Task($taskName, $priority, Status::UNDONE);
 
-            $this->fileWorker->writeFile(serialize($this->task) . PHP_EOL);
+        $this->fileWorker->writeFile(serialize($this->task) . PHP_EOL);
 
     }
 

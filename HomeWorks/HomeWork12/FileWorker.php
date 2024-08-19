@@ -5,7 +5,7 @@ class FileWorker
     private string $filePath;
     protected string $fileName;
 
-    public function __construct(string $filePath, string $fileName )
+    public function __construct(string $filePath, string $fileName)
     {
         $this->setFilePath($filePath);
         $this->setFileName($fileName);
