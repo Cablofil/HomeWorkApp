@@ -2,7 +2,7 @@
 
 class AuthController
 {
-    use Validator;
+    use AuthValidator;
     public function login()
     {
         require_once '';
