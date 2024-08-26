@@ -2,73 +2,78 @@
 
 trait Validator
 {
-    protected array $errors = [];
-    protected function validate(array $data, array $rules)
+    /**
+     * @param string $name
+     * @return void
+     * @throws Exception
+     */
+    public function validateName(string $name): void
     {
-        foreach ($rules as $field => $ruleArray) {
-            foreach ($ruleArray as $rule) {
+        $invalidCharacters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_',];
 
-                // required check
-                if ($rule === 'required') {
-                    if ($this->requiredRule($field, $data) === false) {
-                        $this->errors[$field][] = $this->getErrorMessage($rule, $field);
-                    }
-                } elseif ($rule === 'email') {
-                    if ($this->emailRule($field, $data) === false) {
-                        $this->errors[$field][] = $this->getErrorMessage($rule, $field);
-                    }
-                } elseif (str_contains($rule, 'min:')) {
-                    [$ruleName, $number] = $this->parseRuleNumber($rule);
-                    if ($this->minRule($field, $number, $data) === false) {
-                        $this->errors[$field][] = $this->getErrorMessage($ruleName, $field, $number);
-                    }
-                }
+        foreach ($invalidCharacters as $character) {
+            if (str_contains($name, $character)) {
+                throw new Exception("The name '$name' is invalid. $character is invalid character");
             }
         }
     }
 
-    private function parseRuleNumber(string $rule): array
+    /**
+     * @param float $price
+     * @return void
+     * @throws Exception
+     */
+    public function validatePrice(float $price): void
     {
-        return explode(':', $rule);
-    }
-    protected function minRule(string $field, int $number, array $data): bool
-    {
-        if (!isset($data[$field]) || strlen($data[$field]) < $number) {
-            return false;
+        if ($price <= 0) {
+            throw new Exception("Price should be greater than 0");
         }
-        return true;
     }
 
-    protected function requiredRule(string $field, array $data): bool
+    /**
+     * @param string $selectedDate
+     * @return void
+     * @throws Exception
+     */
+    public function validateProductionDate(string $selectedDate): void
     {
-        if (empty($data[$field])) {
-            return false;
+        $dateNow = new DateTime();
+
+        $selectedDate = new DateTime($selectedDate);
+
+        if ($dateNow < $selectedDate) {
+            throw new Exception("Production date can't be in future");
         }
-        return true;
     }
 
-    protected function emailRule(string $field, array $data): bool
+    /**
+     * @param string $string
+     * @param int $maxLength
+     * @param int $minLength
+     * @param bool $crop
+     * @return string
+     * @throws Exception
+     */
+    public function validateString(string &$string, int $minLength, int $maxLength, bool $crop = false): string
     {
-        if (filter_var($data[$field] ?? '' , FILTER_VALIDATE_EMAIL) === false) {
-            return false;
+        $length = strlen($string);
+        if ($length > $maxLength && $length < $minLength && $crop === false) {
+            throw new Exception("String length must be between $minLength and $maxLength characters");
         }
-        return true;
+            $string = substr($string, 0, $maxLength);
+
+        return $string;
     }
 
-    protected function errors(): array
+    /**
+     * @param int $id
+     * @return void
+     * @throws Exception
+     */
+    protected function idValidator(int $id): void
     {
-        return [
-            'required' => "Field %s is required",
-            'email' => "Field %s must be a valid email address",
-            'min' => "Field %s should be at least %d characters",
-            'max' => "Field %s should be less than %d characters",
-            'confirmed' => "Field %s does not match confirmation",
-        ];
-    }
-
-    protected function getErrorMessage(string $rule, ...$fields): string
-    {
-        $errorsText = $this->errors();
-        return sprintf($errorsText[$rule], ...$fields);
+        if (!is_numeric($id)) {
+            throw new Exception("ID must be a number");
+        }
     }
 }
